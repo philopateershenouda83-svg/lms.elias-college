@@ -1,0 +1,24 @@
+﻿
+//state ==> success, primary
+function LoaderBegin(Msg, state, control) {
+    if (arguments.length == 2) {
+        mApp.blockPage({
+            overlayColor: '#000000',
+            type: 'loader',
+            state: state,
+            message: Msg
+        });
+    }
+    else {
+        mApp.block(control, {
+            overlayColor: '#000000',
+            type: 'loader',
+            state: state,
+            message: Msg
+        });
+    }
+}
+
+function LoaderComplete() {
+    mApp.unblockPage();
+}

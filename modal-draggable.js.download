@@ -1,0 +1,12 @@
+﻿$(document).ready(function () {
+    $('.modal-dialog').draggable({
+        // cancel draggable for inputs, textareas, select & ck editor class ".ck"
+        cancel: ".ck,input,textarea,select"
+    });
+    $('.modal-content').resizable({
+        //alsoResize: ".modal-dialog",
+        minWidth: 625,
+        minHeight: 175,
+        handles: 'n, e, s, w, ne, sw, se, nw',
+    });
+});

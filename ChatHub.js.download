@@ -1,0 +1,75 @@
+﻿
+function startChatHub(senderID, language)
+{
+    var chat = $.connection.chatHub;
+
+    chat.client.enters = function (userID, UserName, UserPicture, UserDetails) {
+
+        var TabToRoleID = $("#TabToRoleID").text();
+
+        alert(TabToRoleID);
+
+        //var x = document.getElementById("TabToRoleID");
+        //alert(x);
+        //alert(TabToRoleID);
+
+        //if (TabToRoleID != 0) {
+        //    alert(userID);
+        //    $("#onlineIcon_" + userID).css("display", "inline");
+        //}
+        //$("#ChatUsersDiv_" + TabToRoleID).append(
+        //   '@(Url.Action("UserDetails", "Chat", null, Request.Url.Scheme))?UserID=' + userID +
+        //   '&UserName=' + UserName +
+        //   '&UserPicture=' + UserPicture +
+        //   '&UserDetails=' + UserDetails +
+        //   '&UserStatus=1');
+    }
+
+    chat.client.disconnected = function (userID) {
+
+        var TabToRoleID = $("#TabToRoleID").text();
+
+        if (TabToRoleID != 0) {
+            $("#onlineIcon_" + userID).css("display", "none");
+        }
+    }
+
+    chat.client.seenDisplay = function (from) {
+
+        var recieverID = $("#recieverID").text();
+
+        if (from == recieverID) {
+
+            $("#messageSeen").css("display", "inline");
+        }
+        else {
+            $("#messageSeen").css("display", "none");
+        }
+    }
+
+    chat.client.refreshTab = function () {
+        $("#MultiTabsWarningDialog").dialog({
+            modal: true,
+            buttons: {
+                Ok: function () {
+
+                    $(this).dialog("close");
+                    var win = window.open("about:blank", "_self");
+                    win.close();
+
+                    //OR you can reload
+                    //location.reload(true);
+                }
+            }
+        });
+    }
+
+    $.connection.hub.start().done(function () {
+        chat.server.connectUser(senderID, $.connection.hub.id, language);
+    });
+}
+
+
+
+
+

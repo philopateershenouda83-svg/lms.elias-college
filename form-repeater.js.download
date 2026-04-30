@@ -1,0 +1,81 @@
+var FormRepeater = {
+    init: function () {
+        //For ChooseOneQuestion (RadioFun)
+        $("#m_repeater_1").repeater({ isFirstItemUndeletable: true, initEmpty: !1, defaultValues: { "text-input": "foo" }, show: function () { $(this).slideDown(); FindRadio(); DisplayDeleteBtn(1);  }, hide: function (e) { $(this).slideUp(e); DisplayDeleteBtn(2); } }),
+
+         //For OrderQuestion (OrderFun)
+        $("#m_repeater_2").repeater({ isFirstItemUndeletable: true, initEmpty: !1, defaultValues: { "text-input": "foo" }, show: function () { $(this).slideDown(); OrderFun(); DisplayDeleteBtn(1); }, hide: function (e) { $(this).slideUp(e); DisplayDeleteBtn(2); } }),
+
+         //Other Questions
+        $("#m_repeater_3").repeater({ isFirstItemUndeletable: true, initEmpty: !1, defaultValues: { "text-input": "foo" }, show: function () { $(this).slideDown(); DisplayDeleteBtn(1); }, hide: function (e) { $(this).slideUp(e); DisplayDeleteBtn(2); } }),
+
+       //$("#m_repeater_3").repeater({ initEmpty: !1, defaultValues: { "text-input": "foo" }, show: function () { $(this).slideDown() }, hide: function (e) { confirm("Are you sure you want to delete this element?") && $(this).slideUp(e) } }),
+      $("#m_repeater_4").repeater({ initEmpty: !1, defaultValues: { "text-input": "foo" }, show: function () { $(this).slideDown(); FindSelect(); }, hide: function (e) { $(this).slideUp(e) } }),
+      $("#m_repeater_5").repeater({ initEmpty: !1, defaultValues: { "text-input": "foo" }, show: function () { $(this).slideDown() }, hide: function (e) { $(this).slideUp(e) } }),
+      $("#m_repeater_8").repeater({ initEmpty: !1, defaultValues: { "text-input": "foo" }, show: function () { $(this).slideDown() }, hide: function (e) { $(this).slideUp(e) } }),
+      $("#m_repeater_6").repeater({ initEmpty: !1, defaultValues: { "text-input": "foo" }, show: function () { $(this).slideDown() }, hide: function (e) { $(this).slideUp(e) } })
+    }
+}; jQuery(document).ready(function () { FormRepeater.init() });
+
+function FindRadio() {
+    $('input[name*="ChooseCorrectAnswer"]').each(function () {
+        $(this).on('click', function () {
+            if ($('input[name*="ChooseCorrectAnswer"]') !== $(this)) {
+                $('input[name*="ChooseCorrectAnswer"]').prop("checked", false);
+                $(this).prop("checked", true);         
+            }
+        });
+
+    });
+}
+function OrderFun() {
+ 
+    var Length = parseInt($("[name*='Choice1']").length, 10) - 1;
+    //Put Order 
+    $("div[name='[" + Length + "][OrderDiv]']").html($("div[name*='OrderDiv']").length);
+    ////Display Delete For Last Item 
+    //$("div[name*='Delete']").css('display', 'none');
+    //$("div[name='[" + Length + "][Delete]']").css('display','inline');
+}
+function DisplayDeleteBtn(Index) {
+    //In Delete Index =2 3shan bykon lesa mms74 w 3shan bybd2 mn 0 m4 1 
+    //In Show Index=1 3shan hwa bybd2 mn 0 m4 1 (Display Delete 3nd A5r Wa7d )
+    $("div[name*='Delete']").css('display', 'none');
+    var Length = parseInt($("[name*='Choice1']").length, 10) - Index;
+    $("div[name='[" + Length + "][Delete]']").css('display', 'inline');
+
+
+}
+
+function FindSelect() {
+    //$('select[name*="Students"]').each(function () {
+      
+    //    $.each($('select[name*="Students"]').contents(), function (key, value) {
+
+    //        $(this).append("<option value='" + value.value + "'>" + value.textContent + "</option>");
+    //    });
+
+    //});
+
+    var all = $('select[name*="Students"]').length;
+
+    var s = $('select[name="[0][Students]"]').contents().length;
+
+    var j;
+    for (j = 1; j < all; j++) {
+        var i;
+        for (i = 0; i < s; i++) {
+            $('select[name="['+j+'][Students]"]').append("<option value='" + $('select[name="[0][Students]"]').contents()[i].value + "'>" + $('select[name="[0][Students]"]').contents()[i].textContent + "</option>");
+        }
+        //$.each($('select[name="[0][Students]"]').contents(), function (key, value) {
+
+        //    $('select[name*="Students"]').append("<option value='" + value.value + "'>" + value.textContent + "</option>");
+        //});
+
+        // $('select[name="[' + j + '][Students]"]').selectpicker('refresh');
+    }
+       
+   
+            
+   
+}
